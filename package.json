@@ -1,0 +1,38 @@
+{
+  "name": "cpf-blacklist",
+  "version": "1.0.0",
+  "description": "A simple application to verify if a CPF number is blacklisted",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diogoo296/cpf-blacklist.git"
+  },
+  "keywords": [
+    "hapi"
+  ],
+  "author": "Diogo M. Santana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diogoo296/cpf-blacklist/issues"
+  },
+  "homepage": "https://github.com/diogoo296/cpf-blacklist#readme",
+  "docPath": "/documentation",
+  "devDependencies": {
+    "standard": "^11.0.1"
+  },
+  "dependencies": {
+    "good": "^8.1.1",
+    "good-console": "^7.1.0",
+    "good-squeeze": "^5.0.2",
+    "hapi": "^17.2.3",
+    "hapi-qs": "^2.0.1",
+    "hapi-swagger": "^9.1.1",
+    "inert": "^5.1.0",
+    "joi": "^13.1.2",
+    "vision": "^5.3.2"
+  }
+}
