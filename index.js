@@ -41,7 +41,9 @@ const init = async () => {
   // Request counter
   server.events.on('response', (request) => {
     if (!request) return
-    request.server.counter[request.path][request.method.toUpperCase()]++
+    const reqPath = request.server.counter[request.path]
+    if (!reqPath) return // Count only API routes
+    reqPath[request.method.toUpperCase()]++
   })
 
   await server.start()
