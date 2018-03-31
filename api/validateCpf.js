@@ -29,7 +29,6 @@ const customJoi = Joi.extend((joi) => ({
     name: 'cpf',
 
     validate (params, value, state, options) {
-      console.log(value)
       return cpfIsValid(value)
         ? value
         : this.createError('string.cpf', { v: value }, state, options)

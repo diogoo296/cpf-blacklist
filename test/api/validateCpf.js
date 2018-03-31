@@ -4,6 +4,12 @@ const expect = require('chai').expect
 const cpfSchema = require('../../api/validateCpf')('query').query.cpf
 
 describe('validateCpf', function () {
+  it('should invalidate non-string CPF', function () {
+    const errorMsg = '"value" must be a string'
+    validate(25158445532, errorMsg)
+    validate(59329473490, errorMsg)
+  })
+
   it('should invalidate CPF with length != 11', function () {
     const errorMsg = '"value" length must be 11 characters long'
     validate('2515844553', errorMsg) // 10 chars
