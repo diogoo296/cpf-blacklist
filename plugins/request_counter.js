@@ -1,6 +1,9 @@
 class RequestCounter {
   constructor (routes) {
-    if (!routes) throw Error('Options object should have a routes Array')
+    // Verify routes object
+    if (!routes || !Array.isArray(routes)) {
+      throw Error('Options object should have a routes Array')
+    }
 
     // Initialize server request counter
     this.counter = routes.reduce(

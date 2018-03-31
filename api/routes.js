@@ -1,17 +1,5 @@
-const joi = require('joi')
-
 const controllers = require('./controllers')
-
-const validateCpf = (key) => ({
-  [key]: {
-    cpf: joi
-      .string()
-      .length(11)
-      .regex(/^\d+$/)
-      .required()
-      .description('CPF number')
-  }
-})
+const validateCpf = require('./validateCpf')
 
 module.exports = [{
   method: 'GET',
@@ -50,16 +38,6 @@ module.exports = [{
     validate: validateCpf('payload'),
     description: 'Free CPF',
     notes: 'Frees a CPF number if it is in the Blacklist',
-    tags: ['api', 'cpf']
-  }
-}, {
-  method: 'GET',
-  path: '/valid',
-  handler: controllers.cpfIsValid,
-  config: {
-    validate: validateCpf('query'),
-    description: 'Número de CPF válido?',
-    notes: 'Retorna VERDADEIRO caso o número de CPF seja válido e FALSO caso contrário',
     tags: ['api', 'cpf']
   }
 }]

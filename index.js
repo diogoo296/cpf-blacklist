@@ -4,7 +4,14 @@ const moment = require('moment')
 const routes = require('./api/routes')
 
 const server = new Hapi.Server({
-  port: 3000, routes: { cors: true }
+  port: 3000,
+  routes: {
+    cors: true,
+    // Should be used only in development (see: https://github.com/hapijs/hapi/issues/3706)
+    validate: {
+      failAction: async (request, h, err) => { throw err }
+    }
+  }
 })
 
 const init = async () => {

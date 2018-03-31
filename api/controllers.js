@@ -1,7 +1,5 @@
 const moment = require('moment')
 
-const CPF_LEN = 11
-
 module.exports = {
   status: (request, h) => {
     const info = request.server.info
@@ -20,31 +18,7 @@ module.exports = {
 
   block: (request, h) => true,
 
-  free: (request, h) => true,
-
-  cpfIsValid: (request, h) => {
-    // Transform CPF string to an integer array
-    const cpfArr = request.query.cpf.split('').map(Number)
-    const lastDigit = cpfArr[cpfArr.length - 1]
-    let multiplier = CPF_LEN
-
-    // Calculate CPF sum to check with last digit
-    const sum = cpfArr
-      .slice(0, -1)
-      .reduce(
-        (acc, cur) => {
-          acc += cur * multiplier
-          multiplier--
-          return acc
-        },
-        0
-      )
-
-    const reminder = sum % 11
-
-    if ([0, 1].includes(reminder)) return lastDigit === 0
-    else return lastDigit === CPF_LEN - reminder
-  }
+  free: (request, h) => true
 }
 
 const formatUnixMs = (timestamp) => moment.unix(timestamp / 1000).format()
