@@ -16,7 +16,7 @@ const formatErrors = (errors) => errors.map(err => {
 const customJoi = Joi.extend((joi) => ({
   base: joi
     .string()
-    .length(11) // CPF must have 11 caracters
+    .length(CPF_LEN) // CPF must have 11 caracters
     .regex(/^\d+$/) // CPF must have only digits
     .description('CPF number')
     .error(formatErrors),
