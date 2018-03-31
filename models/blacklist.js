@@ -7,9 +7,10 @@ module.exports = (Sequelize, DataTypes) => {
       autoIncrement: true
     },
     cpf: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(11),
       allowNull: false,
-      unique: true
+      unique: true,
+      validate: { isNumeric: true }
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -20,6 +21,6 @@ module.exports = (Sequelize, DataTypes) => {
     tablename: 'blacklist',
     timestamps: true,
     updatedAt: false,
-    deletedAl: false
+    deletedAt: false
   })
 }

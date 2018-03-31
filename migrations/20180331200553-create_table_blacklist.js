@@ -8,14 +8,15 @@ module.exports = {
         autoIncrement: true
       },
       cpf: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(11),
         allowNull: false,
-        unique: true
+        unique: true,
+        validate: { isNumeric: true }
       },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.NOW
+        defaultValue: queryInterface.sequelize.literal('CURRENT_TIMESTAMP')
       }
     })
   },
