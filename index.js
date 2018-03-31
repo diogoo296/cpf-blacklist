@@ -14,7 +14,8 @@ const init = async () => {
     require('vision'),
     require('hapi-qs'),
     require('./plugins/good'),
-    require('./plugins/swagger')
+    require('./plugins/swagger'),
+    { plugin: require('./plugins/request_counter'), options: { routes: routes } }
   ])
 
   // Register default route: Swagger documentation
@@ -27,24 +28,6 @@ const init = async () => {
 
   // Register API routes & controllers
   server.route(routes)
-
-  // Initialize server request counter
-  server.counter = routes.reduce(
-    (dict, route) => {
-      if (!(route.path in dict)) dict[route.path] = {}
-      dict[route.path][route.method.toUpperCase()] = 0
-      return dict
-    },
-    {}
-  )
-
-  // Request counter
-  server.events.on('response', (request) => {
-    if (!request) return
-    const reqPath = request.server.counter[request.path]
-    if (!reqPath) return // Count only API routes
-    reqPath[request.method.toUpperCase()]++
-  })
 
   await server.start()
   console.log(`[${moment().format()}], Server running at ${server.info.uri}`)
