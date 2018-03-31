@@ -3,18 +3,18 @@ const moment = require('moment')
 
 const routes = require('./api/routes')
 
-const server = new Hapi.Server({
-  port: 3000,
-  routes: {
-    cors: true,
-    // Should be used only in development (see: https://github.com/hapijs/hapi/issues/3706)
-    validate: {
-      failAction: async (request, h, err) => { throw err }
-    }
-  }
-})
-
 const init = async () => {
+  const server = new Hapi.Server({
+    port: 3000,
+    routes: {
+      cors: true,
+      // Should be used only in development (see: https://github.com/hapijs/hapi/issues/3706)
+      validate: {
+        failAction: async (request, h, err) => { throw err }
+      }
+    }
+  })
+
   // Register plugins
   await server.register([
     require('inert'),
@@ -29,8 +29,7 @@ const init = async () => {
   server.route({
     path: '/',
     method: 'GET',
-    handler: (request, h) => h.redirect(require('./package.json').docPath),
-    config: { auth: false }
+    handler: (request, h) => h.redirect(require('./package.json').docPath)
   })
 
   // Register API routes & controllers
@@ -38,6 +37,8 @@ const init = async () => {
 
   await server.start()
   console.log(`[${moment().format()}], Server running at ${server.info.uri}`)
+
+  return server
 }
 
 process.on('unhandledRejection', (err) => {
@@ -45,4 +46,4 @@ process.on('unhandledRejection', (err) => {
   process.exit(1)
 })
 
-init()
+module.exports = init()

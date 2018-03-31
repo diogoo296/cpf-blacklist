@@ -5,14 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard && NODE_ENV=test node_modules/.bin/mocha --recursive"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/diogoo296/cpf-blacklist.git"
   },
   "keywords": [
-    "hapi"
+    "hapi",
+    "cpf",
+    "blacklist"
   ],
   "author": "Diogo M. Santana",
   "license": "ISC",
@@ -21,7 +23,19 @@
   },
   "homepage": "https://github.com/diogoo296/cpf-blacklist#readme",
   "docPath": "/documentation",
+  "standard": {
+    "globals": [
+      "describe",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach",
+      "it"
+    ]
+  },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.5",
     "standard": "^11.0.1"
   },
   "dependencies": {
