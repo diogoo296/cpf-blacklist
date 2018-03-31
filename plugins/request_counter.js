@@ -9,13 +9,14 @@ class RequestCounter {
         dict[route.path][route.method.toUpperCase()] = 0
         return dict
       },
-      {}
+      { total: 0 }
     )
   }
 
   onRequest (request, h) {
     if (request && this.counter[request.path]) {
       this.counter[request.path][request.method.toUpperCase()]++
+      this.counter.total++
       request.server.counter = this.counter
     }
 

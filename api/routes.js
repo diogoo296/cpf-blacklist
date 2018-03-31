@@ -2,8 +2,8 @@ const joi = require('joi')
 
 const controllers = require('./controllers')
 
-const validateCpf = {
-  query: {
+const validateCpf = (key) => ({
+  [key]: {
     cpf: joi
       .string()
       .length(11)
@@ -11,7 +11,7 @@ const validateCpf = {
       .required()
       .description('CPF number')
   }
-}
+})
 
 module.exports = [{
   method: 'GET',
@@ -27,27 +27,27 @@ module.exports = [{
   path: '/consulta',
   handler: controllers.verifyCpf,
   config: {
-    validate: validateCpf,
+    validate: validateCpf('query'),
     description: 'Verifica a situação do CPF',
     notes: 'Retorna FREE se o CPF não estiver na Blacklist e BLOCK caso contrário',
     tags: ['api', 'cpf']
   }
 }, {
-  method: 'GET',
+  method: 'POST',
   path: '/block',
   handler: controllers.block,
   config: {
-    validate: validateCpf,
+    validate: validateCpf('payload'),
     description: 'Block CPF',
     notes: 'Blocks a CPF number if it is not in the Blacklist',
     tags: ['api', 'cpf']
   }
 }, {
-  method: 'GET',
+  method: 'POST',
   path: '/free',
   handler: controllers.free,
   config: {
-    validate: validateCpf,
+    validate: validateCpf('payload'),
     description: 'Free CPF',
     notes: 'Frees a CPF number if it is in the Blacklist',
     tags: ['api', 'cpf']
@@ -57,7 +57,7 @@ module.exports = [{
   path: '/valid',
   handler: controllers.cpfIsValid,
   config: {
-    validate: validateCpf,
+    validate: validateCpf('query'),
     description: 'Número de CPF válido?',
     notes: 'Retorna VERDADEIRO caso o número de CPF seja válido e FALSO caso contrário',
     tags: ['api', 'cpf']
