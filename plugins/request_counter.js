@@ -17,8 +17,11 @@ class RequestCounter {
   }
 
   onRequest (request, h) {
-    if (request && this.counter[request.path]) {
-      this.counter[request.path][request.method.toUpperCase()]++
+    const method = request.method.toUpperCase()
+
+    if (request && this.counter[request.path] &&
+        method in this.counter[request.path]) {
+      this.counter[request.path][method]++
       this.counter.total++
       request.server.counter = this.counter
     }
