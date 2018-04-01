@@ -66,7 +66,20 @@ Por fim, inicie a aplicação com o comando `npm start`, o qual deverá reprodiz
 [2018-04-01T18:57:13-03:00], Server running at http://0.0.0.0:3000
 ```
 
-## 3. Configurações
+## 3. Estrutura do projeto
+
+| Diretório | Descrição |
+|--|--|
+| api | Código referente às rotas e controladores. |
+| config | Arquivos de configuração do projeto. |
+| data | Arquivos de banco de dados do SQLite3. |
+| migrations | Migrações do banco de dados geradas pelo *Sequelize*. |
+| models | Modelos das tabelas do banco de dados. |
+| plugins | Plugins de extensão do servidor *Hapi*. |
+| seeders | Populadores do banco de dados geradas pelo *Sequelize*. |
+| test | Testes unitários. |
+
+## 4. Configurações
 
 Os arquivos configuráveis da aplicação encontram-se no diretório `./config`:
 
@@ -75,10 +88,30 @@ Os arquivos configuráveis da aplicação encontram-se no diretório `./config`:
 
 > **Nota:** De modo a permitir o funcionamento correto do Docker, as configurações de *host* do servidor devem ser definidas como **0.0.0.0** para o servidor local, ao invés de *localhost* ([ver pergunta no StackOverflow](https://stackoverflow.com/questions/48034906/node-docker-runs-but-cant-see-the-application)).
 
-## 4. Documentação da API
+## 5. Documentação da API
 
 Uma vez que a aplicação estiver funcional, basta acessar seu endereço raiz (`http://localhost:3000`) ou o endereço `http://localhost:3000/documentation` para verificar a documentação gerada pelo Swagger. A documentação possui informação completa de todas as rotas e seus parâmetros, além de permitir realizar requisições para a API e visualizar a resposta do servidor.
 
-## 5. Testes
+## 6. Testes
 
 Antes de realizar os testes, crie o arquivo referente ao banco de testes a partir do comando `touch data/cpf_test.db`. Por fim, basta utilizar o comando `npm test`.
+
+## 7. Sobre os Requisitos
+
+**Requisitos adicionais:**
+*  Testes unitários implementados no diretório `./test` utilizando as bibliotecas `Mocha` e `Chai`.
+* Utilização do **SQLite3** como banco de dados embutido.
+* Adição das rotas `/block` e `/free` para adicionar e remover CPF's da *Blacklist*.
+* Mensagens de erro customizadas para CPF's inválidos ou para operações inválidas nas rotas. Demais erros retornam o código de erro HTTP e mensagem equivalente (4xx, 5xx) a partir do uso do pacote `Boom` internalmente pelo framework do `Hapi`.
+
+**Observações sobre alguns requisitos:**
+
+> *Ser acessível via browser e oferecer um formulário para consulta apresentando FREE se o CPF não estiver na _Blacklist_, _BLOCK_ se o CPF estiver na _Blacklist_ e exibir opções para inclusão e remoção em ambos os cenários.* 
+
+A acessibilidade via browser foi implementada a partir da página de documentação gerada pelo Swagger, a qual pode ser acessada a partir do endereço `http://localhost:3000/documentation`.
+
+Para consultar um CPF, basta clicar em **query** e preencher o formulário com o dado desejado. Para incluir ou remover um CPF da *Blacklist*, basta utilizar as opções **block** e **free**, respectivamente.
+
+> *"Validação do CPF/máscara na consulta e inclusão."*
+
+A máscara no formulário de consulta não foi implementada. A validação do CPF é realizada na API antes da execução do *controller* da rota.
