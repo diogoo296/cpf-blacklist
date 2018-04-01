@@ -18,7 +18,7 @@ const customJoi = Joi.extend((joi) => ({
     .string()
     .length(CPF_LEN) // CPF must have 11 caracters
     .regex(/^\d+$/) // CPF must have only digits
-    .default(25158445532) // For Swagger from
+    .default('25158445532') // For Swagger from
     .description('CPF number')
     .error(formatErrors),
 

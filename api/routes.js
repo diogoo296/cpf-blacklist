@@ -6,8 +6,8 @@ module.exports = [{
   path: '/status',
   handler: controllers.status,
   config: {
-    description: 'Status gerais do servidor',
-    notes: 'Retorna informações de uptime do servidor, quantidade consultas desde o último restart e quantidade de CPFs na blacklist',
+    description: 'General server status',
+    notes: 'Return server uptime info, requests count and the CPF Blacklist',
     tags: ['api', 'server']
   }
 }, {
@@ -16,8 +16,8 @@ module.exports = [{
   handler: controllers.query,
   config: {
     validate: validateCpf('query'),
-    description: 'Verifica a situação do CPF',
-    notes: 'Retorna FREE se o CPF não estiver na Blacklist e BLOCK caso contrário',
+    description: 'Query CPF situation',
+    notes: 'Return FREE if the CPF is in the Blacklist and BLOCKED if not',
     tags: ['api', 'cpf']
   }
 }, {

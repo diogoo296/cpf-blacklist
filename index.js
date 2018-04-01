@@ -2,11 +2,12 @@ const Hapi = require('hapi')
 const moment = require('moment')
 
 const routes = require('./api/routes')
+const config = require('./config/server')
 
 const init = async () => {
   const server = new Hapi.Server({
-    host: '0.0.0.0',
-    port: 3000,
+    host: config.host,
+    port: config.port,
     routes: {
       cors: true,
       // Should be used only in development (see: https://github.com/hapijs/hapi/issues/3706)
