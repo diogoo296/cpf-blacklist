@@ -12,8 +12,8 @@ module.exports = [{
   }
 }, {
   method: 'GET',
-  path: '/consulta',
-  handler: controllers.verifyCpf,
+  path: '/query',
+  handler: controllers.query,
   config: {
     validate: validateCpf('query'),
     description: 'Verifica a situação do CPF',

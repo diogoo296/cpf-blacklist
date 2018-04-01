@@ -1,5 +1,5 @@
 module.exports = (Sequelize, DataTypes) => {
-  return Sequelize.define('employee', {
+  let Blacklist = Sequelize.define('Blacklist', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -18,9 +18,15 @@ module.exports = (Sequelize, DataTypes) => {
       defaultValue: DataTypes.NOW
     }
   }, {
-    tablename: 'blacklist',
+    tableName: 'blacklist',
     timestamps: true,
     updatedAt: false,
     deletedAt: false
   })
+
+  Blacklist.findCpfNumber = (cpf) => {
+    return Blacklist.findOne({ where: { cpf: cpf } })
+  }
+
+  return Blacklist
 }

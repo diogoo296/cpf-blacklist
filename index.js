@@ -16,14 +16,15 @@ const init = async () => {
   })
 
   // Register plugins
-  await server.register([
+  let plugins = [
     require('inert'),
     require('vision'),
     require('hapi-qs'),
-    require('./plugins/good'),
     require('./plugins/swagger'),
     { plugin: require('./plugins/request_counter'), options: { routes: routes } }
-  ])
+  ]
+  if (process.env.NODE_ENV !== 'test') plugins.push(require('./plugins/good'))
+  await server.register(plugins)
 
   // Register default route: Swagger documentation
   server.route({
@@ -36,7 +37,9 @@ const init = async () => {
   server.route(routes)
 
   await server.start()
-  console.log(`[${moment().format()}], Server running at ${server.info.uri}`)
+  if (process.env.NODE_ENV !== 'test') {
+    console.log(`[${moment().format()}], Server running at ${server.info.uri}`)
+  }
 
   return server
 }
