@@ -5,6 +5,7 @@ const routes = require('./api/routes')
 
 const init = async () => {
   const server = new Hapi.Server({
+    host: '0.0.0.0',
     port: 3000,
     routes: {
       cors: true,
@@ -20,10 +21,14 @@ const init = async () => {
     require('inert'),
     require('vision'),
     require('hapi-qs'),
-    require('./plugins/swagger'),
     { plugin: require('./plugins/request_counter'), options: { routes: routes } }
   ]
-  if (process.env.NODE_ENV !== 'test') plugins.push(require('./plugins/good'))
+  if (process.env.NODE_ENV !== 'test') {
+    plugins.push(require('./plugins/good'))
+  }
+  if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
+    plugins.push(require('./plugins/swagger'))
+  }
   await server.register(plugins)
 
   // Register default route: Swagger documentation
